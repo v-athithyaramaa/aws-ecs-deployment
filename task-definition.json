@@ -1,0 +1,21 @@
+{
+  "family": "node-task",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "node-container",
+      "image": "843916760293.dkr.ecr.us-east-1.amazonaws.com/athithya-node-app:latest",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512"
+}
