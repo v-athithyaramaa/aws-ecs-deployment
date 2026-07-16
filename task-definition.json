@@ -1,10 +1,11 @@
 {
   "family": "node-task",
   "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::843916760293:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "name": "node-container",
-      "image": "843916760293.dkr.ecr.us-east-1.amazonaws.com/athithya-node-app:latest",
+      "image": "843916760293.dkr.ecr.us-east-1.amazonaws.com/my-node-app:latest",
       "portMappings": [
         {
           "containerPort": 3000,
