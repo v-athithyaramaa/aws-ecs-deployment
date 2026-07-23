@@ -5,18 +5,13 @@ pipeline {
         AWS_REGION     = 'us-east-1'
         AWS_ACCOUNT_ID = '843916760293'
         ECR_REPO_NAME  = 'my-app-repo'
-        ECR_URI        = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        ECR_URI        = "843916760293.dkr.ecr.us-east-1.amazonaws.com"
         IMAGE_TAG      = "${BUILD_NUMBER}"
-        
-        // Binds your Jenkins credential ID to environment variables automatically
-        AWS_CREDENTIALS = credentials('aws-ecr-credentials') // Replace with your exact Jenkins Credential ID
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Jenkins automatically checks out SCM if using a Jenkinsfile in Git,
-                // but this explicitly ensures code is ready.
                 checkout scm
             }
         }
@@ -65,9 +60,9 @@ pipeline {
     post {
         always {
             echo "=== Cleaning up local Docker images ==="
-            sh "docker rmi ${ECR_REPO_NAME}:${IMAGE_TAG} || true"
-            sh "docker rmi ${ECR_URI}/${ECR_REPO_NAME}:${IMAGE_TAG} || true"
-            sh "docker rmi ${ECR_URI}/${ECR_REPO_NAME}:latest || true"
+            sh "docker rmi ${env.ECR_REPO_NAME}:${env.IMAGE_TAG} || true"
+            sh "docker rmi ${env.ECR_URI}/${env.ECR_REPO_NAME}:${env.IMAGE_TAG} || true"
+            sh "docker rmi ${env.ECR_URI}/${env.ECR_REPO_NAME}:latest || true"
         }
         success {
             echo "Pipeline completed successfully! Docker image pushed to ECR."
